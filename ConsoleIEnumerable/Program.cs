@@ -1,32 +1,23 @@
-﻿int[] numbersArr = [4, 2, 6, 1, 3, 2, 1];
+﻿using ConsoleIEnumerable;
+using System.Numerics;
 
-Numbers numbers = new Numbers(numbersArr);
+int[] numbersIntArray = [4, 2, 6, 1, 3, 2, 1];
+List<int> numbersIntList = new List<int>() { 5, 2, 6 };
+double[] numbersDoubleArray = [4.3, 5.7, 2.0, 6.1];
 
-foreach (int n in numbers)
+WriteResult(numbersIntArray);
+WriteResult(numbersIntList);
+WriteResult(numbersDoubleArray);
+
+void WriteResult<TValue>(IEnumerable<TValue> source)
+    where TValue : INumberBase<TValue>
 {
-    Console.WriteLine(n);
-}
+    Console.Write("Result: ");
 
-
-class Numbers
-{
-    private int[] _arr;
-
-    public Numbers(int[] arr)
+    foreach (var num in source.SumWithNext())
     {
-        _arr = arr;
+        Console.Write(num + " ");
     }
 
-    public IEnumerator<int> GetEnumerator()
-    {
-        for (int i = 0; i < _arr.Length; i++)
-        {
-            if (i == _arr.Length - 1)
-            {
-                yield break;
-            }
-
-            yield return _arr[i] + _arr[i + 1];
-        }
-    }
+    Console.WriteLine();
 }
